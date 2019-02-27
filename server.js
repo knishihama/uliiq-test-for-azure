@@ -8,5 +8,4 @@ const nuxt = new Nuxt(config)
 app.use(nuxt.render)
 // Listen the server
 app.listen(port, host);
-console.log('baseUrl :' + baseUrl);
 console.log('Server listening on ' + host + ':' + port);
