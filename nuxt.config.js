@@ -1,10 +1,4 @@
-//import parseArgs from "minimist";
 const parseArgs = require('minimist')
-// SPAモードを有効。未設定（デフォルト）ではSSRモード TODO:SPAモードが不要となったら消す
-/*
-module.exports = {
-  mode: 'spa'
-}*/
 
 const argv = parseArgs(process.argv.slice(2), {
   alias: {
@@ -26,6 +20,12 @@ const host =
   process.env.npm_package_config_nuxt_host ||
   "127.0.0.1"
 
+// azure環境の場合、baseUrlはazureのURLを設定する
+var azureurl
+  if (process.env.WEBSITE_HOSTNAME) {
+    azureurl = "https://" + process.env.WEBSITE_HOSTNAME ;
+  }
+
 module.exports = {
   build: {
     extend (config, { isClient, loaders: { vue } }) {
@@ -37,6 +37,7 @@ module.exports = {
   },
   env: {
     baseUrl:
+      azureurl ||
       process.env.BASE_URL ||
       `http://${host}:${port}`
   },
@@ -70,13 +71,17 @@ module.exports = {
       }
     ],
     link: [
-      /* Favicon */
+      //TODO:各スタイルシートの整理をする
+      /*
+      ** 初期取り込み
+      */ 
+      // Favicon
       {
         rel: "icon",
         type: "image/png",
-        href: "~/assets/img/brand/favicon.png"
+        href: "~assets/img/brand/favicon.png"
       },
-      /* Fonts */
+      // Fonts
       {
         rel: "stylesheet",
         href: "https://use.fontawesome.com/releases/v5.6.3/css/all.css",
@@ -89,26 +94,15 @@ module.exports = {
       },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css?family=M+PLUS+1p"
+        src: "https://fonts.googleapis.com/css?family=M+PLUS+1p"
       },
     ],
-    /* slick 適用調査
     script: [
-    { src: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js' },
-      //Core
-      //{ src: '~/assets/vendor/jquery/jquery.min.js' },
-      { src: '~/assets/vendor/popper/popper.min.js' },
-      { src: '~/assets/vendor/bootstrap/bootstrap.min.js' },
-      //Optional JS
-      { src: '~/assets/vendor/headroom/headroom.min.js' },
-      { src: '~/assets/vendor/onscreen/onscreen.min.js' },
-      { src: '~/assets/vendor/nouislider/js/nouislider.min.js' },
-      { src: '~/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js' },
-      // WishHub JS
-      { src: '~/assets/js/argon.js?v=1.0.1' },
-      { src: '~/assets/js/slick.min.js' }
+      /*
+      ** V0218
+      */
+      { src: "https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js" }
     ]
-    */
   },
   /*
   ** Customize the progress-bar color
@@ -118,21 +112,30 @@ module.exports = {
   ** Build configuration
   */
   css: [
-    /* Icons */
-    "~/assets/vendor/nucleo/css/nucleo.css",
-    "~/assets/vendor/font-awesome/css/font-awesome.min.css",
-    /* WishHub CSS */
-    "~/assets/css/main.css",
-    /* JS CSS */
-    "~/assets/css/slick.css",
-    "~/assets/css/slick-theme.css"
+    //TODO:各スタイルシートの整理をする
+    /*
+    ** 初期取り込み
+    */
+    // Icons
+    "~assets/vendor/nucleo/css/nucleo.css",
+    "~assets/vendor/font-awesome/css/font-awesome.min.css",
+    // WishHub CSS
+    "~assets/css/main.css",
+    // JS CSS
+    "~assets/css/slick.css",
+    "~assets/css/slick-theme.css",
+    /*
+    ** V0218
+    */
+    "~assets/V0218/dest/style.css",
   ],
   build: {},
   modules: [
     "@nuxtjs/axios",
     ///TODO: PWA化の検証が完了したら有効化する
-    //"@nuxtjs/pwa",
+    "@nuxtjs/pwa",
     "~/modules/typescript.js",
+    //"~/modules/V0218/js/scroll.js"
   ],
   plugins:[
     '~/plugins/axios.ts'
@@ -146,11 +149,10 @@ module.exports = {
     name: "WishHub's Page",
     lang: 'ja'
   },
-  /* TODO:APIサーバのURLが決まったらここにベースのURLを記入する 例：https://hogehogeapi */
-  axios: {
-    //baseUrl :'https://wishhub-dev-api.azurewebsites.net/api/'
-    //baseUrl :'https://uliiq-test-manual.azurewebsites.net'
-    //baseUrl : 'http://127.0.0.1:3000'
-    //baseUrl : 'http://localhost:8080'
+  axios :{
+    proxy:true
+  },
+  proxy: {
+    '/test' : azureurl || `http://${host}:${port}`
   }
 }
