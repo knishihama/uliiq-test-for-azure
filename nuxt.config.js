@@ -150,6 +150,7 @@ module.exports = {
     lang: 'ja'
   },
   axios :{
+    baseURL:azureurl || `http://${host}:${port}`,
     proxy:true
   },
   proxy: {
