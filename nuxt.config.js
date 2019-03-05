@@ -120,14 +120,18 @@ module.exports = {
     "~assets/vendor/nucleo/css/nucleo.css",
     "~assets/vendor/font-awesome/css/font-awesome.min.css",
     // WishHub CSS
-    "~assets/css/main.css",
+    //"~assets/css/main.css",
     // JS CSS
     "~assets/css/slick.css",
     "~assets/css/slick-theme.css",
     /*
     ** V0218
     */
-    "~assets/V0218/dest/style.css",
+    //"~assets/V0218/dest/style.css",
+    /*
+    ** V0305
+    */
+    "~assets/V0305/dest/style.css",
   ],
   build: {},
   modules: [
