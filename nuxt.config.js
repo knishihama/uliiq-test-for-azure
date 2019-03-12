@@ -1,5 +1,4 @@
 const parseArgs = require('minimist')
-
 const argv = parseArgs(process.argv.slice(2), {
   alias: {
     H: "hostname",
@@ -37,9 +36,7 @@ module.exports = {
   },
   env: {
     baseUrl:
-      azureurl ||
-      process.env.BASE_URL ||
-      `http://${host}:${port}`
+      azureurl || process.env.BASE_URL || `http://${host}:${port}`
   },
   head: {
     title: "WishHub（ウィッシュハブ）｜アイドル・アーティストの「お願い」をファンの行動で「叶える」",
@@ -69,6 +66,19 @@ module.exports = {
         name: "description",
         content: "Nuxt.js project"
       }
+    ],
+    script: [
+        {
+          src: 'https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.3.4/bluebird.min.js',
+          class: 'pre'
+        },
+        {
+          src: 'https://secure.aadcdn.microsoftonline-p.com/lib/0.1.1/js/msal.min.js'
+        },
+        {
+          src: 'https://code.jquery.com/jquery-3.2.1.min.js',
+          class: 'pre'
+        }
     ],
     link: [
       //TODO:各スタイルシートの整理をする
@@ -101,7 +111,8 @@ module.exports = {
       /*
       ** V0218
       */
-      { src: "https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js" }
+     { src: "https://secure.aadcdn.microsoftonline-p.com/lib/0.1.1/js/msal.min.js" },
+     { src: "https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js" }
     ]
   },
   /*
@@ -131,33 +142,31 @@ module.exports = {
     /*
     ** V0305
     */
-    "~assets/V0305/dest/style.css",
+    //"~assets/V0305/dest/style.css",
+    /*
+    ** V0308
+    */
+   "~assets/V0308/dest/style.css",
   ],
   build: {},
   modules: [
     "@nuxtjs/axios",
-    ///TODO: PWA化の検証が完了したら有効化する
     "@nuxtjs/pwa",
-    "~/modules/typescript.js",
+    "~/modules/typescript.js"
     //"~/modules/V0218/js/scroll.js"
   ],
   plugins:[
     '~/plugins/axios.ts'
   ],
-  /* PWAの検証が完了したら正式に設定する
-  workbox: {
-   dev: true //開発環境でもPWAできるようにするにはtrue
-  },
-  */
   manifest: {
     name: "WishHub's Page",
     lang: 'ja'
   },
   axios :{
-    baseURL:azureurl || `http://${host}:${port}`,
+    baseURL: "https://wishhub-dev-api.azurewebsites.net" || azureurl || `http://${host}:${port}`,
     proxy:true
   },
   proxy: {
-    '/test' : azureurl || `http://${host}:${port}`
-  }
+      '/api' :'https://wishhub-dev-api.azurewebsites.net'
+  },
 }

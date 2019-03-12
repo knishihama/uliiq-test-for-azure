@@ -14,6 +14,7 @@ const _46f1b821 = () => interopDefault(import('..\\pages\\account\\my\\artist_pr
 const _8bac956e = () => interopDefault(import('..\\pages\\account\\my\\bounties\\index.vue' /* webpackChunkName: "pages_account_my_bounties_index" */))
 const _c84e30e4 = () => interopDefault(import('..\\pages\\account\\my\\products\\index.vue' /* webpackChunkName: "pages_account_my_products_index" */))
 const _39c22019 = () => interopDefault(import('..\\pages\\account\\my\\profile\\index.vue' /* webpackChunkName: "pages_account_my_profile_index" */))
+const _7e546d26 = () => interopDefault(import('..\\pages\\account\\signup\\sample.vue' /* webpackChunkName: "pages_account_signup_sample" */))
 const _e33a2b08 = () => interopDefault(import('..\\pages\\account\\my\\books\\create\\index.vue' /* webpackChunkName: "pages_account_my_books_create_index" */))
 const _0ba4dcdc = () => interopDefault(import('..\\pages\\account\\my\\products\\create\\index.vue' /* webpackChunkName: "pages_account_my_products_create_index" */))
 const _3bceeef2 = () => interopDefault(import('..\\pages\\artists\\_id.vue' /* webpackChunkName: "pages_artists__id" */))
@@ -126,6 +127,10 @@ export function createRouter() {
       path: "/account/my/profile",
       component: _39c22019,
       name: "account-my-profile"
+    }, {
+      path: "/account/signup/sample",
+      component: _7e546d26,
+      name: "account-signup-sample"
     }, {
       path: "/account/my/books/create",
       component: _e33a2b08,
